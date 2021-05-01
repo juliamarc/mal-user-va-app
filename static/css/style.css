@@ -1,0 +1,23 @@
+#gh-icon {
+    color: #000;
+    font-size: 40pt;
+    transition: color 150ms;
+}
+
+#gh-icon:hover {
+    color: #444;
+}
+
+h1 {
+    text-align: center;
+    margin: auto;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    padding: 20px;
+}
+
+div[class^="col-"] {
+    padding: 10px;
+}

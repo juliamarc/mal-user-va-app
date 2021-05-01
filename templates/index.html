@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col-8 text-center">
+    <p>Have you ever wondered where you've heard <i>that</i> VA before?</p>
+  </div>
+  <div class="col-2"></div>
+</div>
+<div class="row">
+  <div class="col-4"></div>
+  <div class="col-4">
+    <form method=post>
+      <div class="form-group">
+        <label for="username">MAL username</label>
+        <input type="text" class="form-control" id="username" name="username">
+      </div>
+      <div class="form-group">
+        <label for="vaid">Voice actor's MAL ID</label>
+        <input type="text" class="form-control" id="vaid" name="vaid"
+          aria-describedby="malIdHelp">
+        <small id="malIdHelp" class="form-text text-muted">It's the number in the link to their MAL page, e.g. 65 for https://myanimelist.net/people/65/Mamoru_Miyano</small>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-outline-dark btn-block">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="col-4"></div>
+</div>
+<div class="row">
+  <div class="col-6"></div>
+  <div class="col-6"></div>
+</div>
+
+{% endblock %}

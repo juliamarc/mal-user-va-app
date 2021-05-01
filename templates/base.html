@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>MALVAUserMatchApp</title>
+</head>
+
+<body>
+  <h1>MAL User Anime &#10005; Voice Actor Match Finder</h1>
+  <div id="container">
+    {% block body %}
+    {% endblock %}
+
+    <div class="row">
+      <div class="col-5"></div>
+      <div class="col-2 text-center">
+        <a href="https://github.com/juliamarc">
+          <span id="gh-icon" class="fab fa-github" aria-hidden="true" />
+        </a>
+      </div>
+      <div class="col-5"></div>
+    </div>
+  </div>
+</body>
+
+</html>

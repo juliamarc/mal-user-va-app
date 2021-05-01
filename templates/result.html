@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-12 fs-2 text-center">{{ user }} &#10005; {{ voice_actor.name }}</div>
+</div>
+
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col-8">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Anime</th>
+          <th scope="col">Character</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for anime in matching_anime %}
+        {% if anime.va_roles|length == 1 %}
+        <tr>
+          <th scope="row">{{ loop.index }}</th>
+          <td>{{ anime.title }}</td>
+          <td>{{ anime.va_roles[0].character.name }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <th scope="row" rowspan="{{ anime.va_roles|length }}">{{ loop.index }}</th>
+          <td rowspan="{{ anime.va_roles|length }}">{{ anime.title }}</td>
+          <td>{{ anime.va_roles[0].character.name }}</td>
+        </tr>
+        {% for role in anime.va_roles[1:] %}
+        <tr>
+          <td>{{ role.character.name }}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="col-2"></div>
+</div>
+
+{% endblock %}
