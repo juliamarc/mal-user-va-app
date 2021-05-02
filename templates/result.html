@@ -2,46 +2,59 @@
 
 {% block body %}
 
+{% set status = {
+1: 'watching',
+2: 'completed',
+3: 'onhold',
+4: 'dropped',
+6: 'plantowatch'} %}
+
 <div class="row">
-  <div class="col-12 fs-2 text-center">{{ user }} &#10005; {{ voice_actor.name }}</div>
+  <div class="col-12 text-center">
+    <img src="{{ voice_actor.image_url }}" alt="{{ voice_actor.name }}" style="width: 100px; height: 150px;">
+  </div>
 </div>
 
 <div class="row">
-  <div class="col-2"></div>
-  <div class="col-8">
+  <div class="col-12 fs-1 text-center">
+    <a href="https://myanimelist.net/profile/{{ user }}">{{ user }}</a>
+    &#10005;
+    <a href="{{ voice_actor.url }}">{{ voice_actor.name }}</a>
+    
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-10 col-sm-9 col-md-8 col-lg-7 col-xl-6">
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Anime</th>
-          <th scope="col">Character</th>
+          <th scope="col" style="width: 1%;" class="status-bar"></th>
+          <th scope="col" style="width: 1%;">#</th>
+          <th scope="col" style="width: 48%;">Anime</th>
+          <th scope="col" style="width: 48%;">Character</th>
+          <th scope="col" style="width: 1%;"></th>
         </tr>
       </thead>
       <tbody>
         {% for anime in matching_anime %}
-        {% if anime.va_roles|length == 1 %}
         <tr>
-          <th scope="row">{{ loop.index }}</th>
-          <td>{{ anime.title }}</td>
-          <td>{{ anime.va_roles[0].character.name }}</td>
-        </tr>
-        {% else %}
-        <tr>
+          <td rowspan="{{ anime.va_roles|length }}" class="status-bar {{ status[anime.watching_status] }}"></td>
           <th scope="row" rowspan="{{ anime.va_roles|length }}">{{ loop.index }}</th>
-          <td rowspan="{{ anime.va_roles|length }}">{{ anime.title }}</td>
-          <td>{{ anime.va_roles[0].character.name }}</td>
+          <td rowspan="{{ anime.va_roles|length }}"><a href="{{ anime.url }}">{{ anime.title }}</a></td>
+          <td><a href="{{ anime.va_roles[0].character.url }}">{{ anime.va_roles[0].character.name }}</a></td>
+          <td><img src="{{ anime.va_roles[0].character.image_url }}" alt="{{ anime.va_roles[0].character.name }}"></td>
         </tr>
         {% for role in anime.va_roles[1:] %}
         <tr>
-          <td>{{ role.character.name }}</td>
+          <td><a href="{{ role.character.url }}">{{ role.character.name }}</a></td>
+          <td><img src="{{ role.character.image_url }}" alt="{{ role.character.name }}"></td>
         </tr>
         {% endfor %}
-        {% endif %}
         {% endfor %}
       </tbody>
     </table>
   </div>
-  <div class="col-2"></div>
 </div>
 
 {% endblock %}

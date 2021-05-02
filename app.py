@@ -1,8 +1,8 @@
 import logging
-import os
 import sys
+
 from datetime import datetime
-from collections import defaultdict
+
 import click
 
 from flask import Flask, render_template, request, send_from_directory
@@ -18,14 +18,19 @@ app.logger.setLevel(logging.ERROR)
 jikan = Jikan()
 
 
-@RateLimiter( max_calls=1, period=4)
+@RateLimiter(max_calls=30, period=60)
+@RateLimiter(max_calls=2, period=1)
 def call_api(call_type, identifier, page=1):
-    print(f"Called API for {call_type} with id {identifier} page {page} {datetime.now()}")
+    print(f"Called API for {call_type} with id {identifier} "
+          f"page {page} {datetime.now()}")
 
     try:
         if call_type == 'user':
-            user = jikan.user(username=identifier, request='animelist',
-                argument='all', page=page)
+            user = jikan.user(
+                username=identifier,
+                request='animelist',
+                argument='all',
+                page=page)
             anime = user['anime']
 
             return anime
@@ -35,9 +40,11 @@ def call_api(call_type, identifier, page=1):
             return person
         else:
             pass
-    except:
+    except Exception as e:
         print("OOPS!")
+        print(e)
         return []
+
 
 def get_info(call_type, identifier, page=1):
     if call_type == 'user':
@@ -73,18 +80,24 @@ def index():
         print("VA roles:", len(va_info['voice_acting_roles']))
 
         user_anime_dict = {anime['mal_id']: anime for anime in user_anime}
-        va_anime_dict = {(role['anime']['mal_id'], role['character']['mal_id']): role for role in va_info['voice_acting_roles']}
+        va_anime_dict = {
+            (role['anime']['mal_id'], role['character']['mal_id']): role
+            for role in va_info['voice_acting_roles']}
 
-        user_matching_anime_dict = {k: v for k, v in user_anime_dict.items() if k in [va_k[0] for va_k in va_anime_dict.keys()]}
-        va_matching_anime_dict = {k: v for k, v in va_anime_dict.items() if k[0] in user_matching_anime_dict}
+        user_matching_anime_dict = {
+            k: v for k, v in user_anime_dict.items()
+            if k in [va_k[0] for va_k in va_anime_dict.keys()]}
+        va_matching_anime_dict = {
+            k: v for k, v in va_anime_dict.items()
+            if k[0] in user_matching_anime_dict}
 
         joined_matching_anime_dict = {}
         for k, v in user_matching_anime_dict.items():
             joined_matching_anime_dict[k] = v
-            va_roles = [v for k, v in filter(lambda kv: kv[0][0] == k, va_matching_anime_dict.items())]
+            va_roles = [
+                v for k, v in filter(
+                    lambda kv: kv[0][0] == k, va_matching_anime_dict.items())]
             joined_matching_anime_dict[k]['va_roles'] = va_roles
-
-            print(joined_matching_anime_dict[k]["title"], joined_matching_anime_dict[k]['va_roles'])
 
         return render_template(
             'result.html',
@@ -93,6 +106,7 @@ def index():
             voice_actor=va_info)
 
     return render_template('index.html')
+
 
 @click.command()
 @click.option('--dev', is_flag=True)

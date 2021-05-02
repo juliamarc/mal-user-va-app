@@ -21,3 +21,32 @@ body {
 div[class^="col-"] {
     padding: 10px;
 }
+
+.table td.status-bar, .table th.status-bar  {
+    padding: 2px;
+}
+
+.table td img {
+    width: 60px;
+    height: 90px;
+}
+
+.watching {
+    background-color: #2db039;
+}
+
+.completed {
+    background-color: #26448f;
+}
+
+.onhold {
+    background-color: #f1c83e;
+}
+
+.dropped {
+    background-color: #a12f31;
+}
+
+.plantowatch {
+    background-color: #c3c3c3;
+}
