@@ -23,23 +23,28 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
   <title>MALVAUserMatchApp</title>
 </head>
 
-<body>
-  <h1>MAL User Anime &#10005; Voice Actor Match Finder</h1>
+<body onpageshow="hideLoadingScreen()">
   <div id="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1>MAL User <b>&#10005;</b> Voice Actor Match Finder</h1>
+      </div>
+    </div>
+
     {% block body %}
     {% endblock %}
 
-    <div class="row">
-      <div class="col-5"></div>
-      <div class="col-2 text-center">
-        <a href="https://github.com/juliamarc">
-          <span id="gh-icon" class="fab fa-github" aria-hidden="true" />
-        </a>
+    <div class="row footer">
+      <div class="col-12">
+        <div class="justify-content-center" style="display: flex;">
+        <a href="https://github.com/juliamarc"><i id="gh-icon" class="fab fa-github"></i></a>
+        <a id='mal-icon' href='https://myanimelist.net/profile/juliama'></a>
+        </div>
       </div>
-      <div class="col-5"></div>
     </div>
   </div>
 </body>

@@ -1,32 +1,36 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<script src="{{ url_for('static', filename='js/script.js') }}"></script> 
+
+<div id="overlay" class="overlay">
+    <div class="spinner-grow spinner" style="width: 3rem; height: 3rem;" role="status"></div>
+</div>
 
 <div class="row">
   <div class="col-2"></div>
   <div class="col-8 text-center">
     <p>Have you ever wondered where you've heard <i>that</i> VA before?</p>
+    <p>Get a list of all voice acting roles of a VA in anime from your list.</p>
   </div>
   <div class="col-2"></div>
 </div>
 <div class="row justify-content-center">
   <div class="col-10 col-sm-7 col-md-5 col-lg-4 col-xl-3">
-    <form method=post>
+    <form method=post  onsubmit="showLoadingScreen()">
       <div class="form-group">
         <label for="username">MyAnimeList user</label>
-        <input type="text" class="form-control" id="username" name="username">
+        <input type="text" class="form-control" id="username" name="username" required>
       </div>
       <div class="form-group">
         <label for="vaid">
           Voice actor's MyAnimeList ID
-          <button type="button" class="btn btn-outline-secondary btn-sm rounded-circle"
-            data-toggle="popover" title="Where is this ID?"
-            data-content="It's in the link to the VA's MAL page, e.g. 65 for https://myanimelist.net/people/65/Mamoru_Miyano">
+          <button type="button" class="btn btn-outline-secondary btn-sm rounded-circle" data-toggle="popover"
+            title="What is the MAL ID?"
+            data-content="It's the number in the link to the VA's MAL page, e.g. 65 for https://myanimelist.net/people/65/Mamoru_Miyano">
             <i class="fas fa-info-circle"></i>
           </button>
         </label>
-        <input type="text" class="form-control" id="vaid" name="vaid">
+        <input type="text" pattern="[0-9]+" class="form-control" id="vaid" name="vaid" required>
       </div>
       <div class="text-center">
         <button type="submit" class="btn btn-outline-dark btn-block">Submit</button>
@@ -34,9 +38,25 @@
     </form>
   </div>
 </div>
-<div class="row">
-  <div class="col-6"></div>
-  <div class="col-6"></div>
+
+{% if info_msg %}
+<div class="row justify-content-center">
+  <div class="col-10 col-sm-7 col-md-5 col-lg-4 col-xl-3">
+    <div class="alert alert-info" role="alert">
+      {{ info_msg }}
+    </div>
+  </div>
 </div>
+{% endif %}
+
+{% if error_msg %}
+<div class="row justify-content-center">
+  <div class="col-10 col-sm-7 col-md-5 col-lg-4 col-xl-3">
+    <div class="alert alert-danger" role="alert">
+      {{ error_msg }}
+    </div>
+  </div>
+</div>
+{% endif %}
 
 {% endblock %}

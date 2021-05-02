@@ -25,7 +25,7 @@
 </div>
 
 <div class="row justify-content-center">
-  <div class="col-10 col-sm-9 col-md-8 col-lg-7 col-xl-6">
+  <div class="col-12 col-sm-12 col-md-11 col-lg-9 col-xl-7">
     <table class="table">
       <thead>
         <tr>
@@ -42,12 +42,18 @@
           <td rowspan="{{ anime.va_roles|length }}" class="status-bar {{ status[anime.watching_status] }}"></td>
           <th scope="row" rowspan="{{ anime.va_roles|length }}">{{ loop.index }}</th>
           <td rowspan="{{ anime.va_roles|length }}"><a href="{{ anime.url }}">{{ anime.title }}</a></td>
-          <td><a href="{{ anime.va_roles[0].character.url }}">{{ anime.va_roles[0].character.name }}</a></td>
+          <td>
+            <a href="{{ anime.va_roles[0].character.url }}">{{ anime.va_roles[0].character.name }}</a><br />
+            <small>{{ anime.va_roles[0].role }}</small>
+          </td>
           <td><img src="{{ anime.va_roles[0].character.image_url }}" alt="{{ anime.va_roles[0].character.name }}"></td>
         </tr>
         {% for role in anime.va_roles[1:] %}
         <tr>
-          <td><a href="{{ role.character.url }}">{{ role.character.name }}</a></td>
+          <td>
+            <a href="{{ role.character.url }}">{{ role.character.name }}</a><br/>
+            <small>{{ anime.va_roles[0].role }}</small>
+          </td>
           <td><img src="{{ role.character.image_url }}" alt="{{ role.character.name }}"></td>
         </tr>
         {% endfor %}
