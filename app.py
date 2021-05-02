@@ -19,9 +19,8 @@ app.logger.setLevel(logging.ERROR)
 jikan = Jikan()
 
 
-# @RateLimiter(max_calls=30, period=60)
-# @RateLimiter(max_calls=2, period=1)
-@RateLimiter(max_calls=1, period=4)
+@RateLimiter(max_calls=30, period=60)
+@RateLimiter(max_calls=2, period=1)
 def call_api(call_type, identifier, page=1):
     print(f"Called API for {call_type} with id {identifier} "
           f"page {page} {datetime.now()}")
